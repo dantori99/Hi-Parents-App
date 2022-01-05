@@ -1,0 +1,48 @@
+# You can override the included template(s) by including variable overrides
+# SAST customization: https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
+# Secret Detection customization: https://docs.gitlab.com/ee/user/application_security/secret_detection/#customizing-settings
+# Dependency Scanning customization: https://docs.gitlab.com/ee/user/application_security/dependency_scanning/#customizing-the-dependency-scanning-settings
+# Note that environment variables can be set in several places
+# See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
+image: node:latest
+
+# before_script:
+#   - apt-get update -qy
+#   - apt-get install -y ruby-dev
+#   - gem install dpl
+
+stages:
+  # - test
+  - production
+
+# test:
+#   type: test
+#   stage: test
+#   services:
+#     - postgres:14-alpine # Add postgres service in Gitlab to test the code
+#   script:
+#     - npm i
+#     - npx sequelize db:create
+#     - npx sequelize db:migrate
+#     - npx sequelize db:seed:all
+#     - npm run dev # It will run test in Gitlab before it upload to heroku
+#   only:
+#     - development
+
+production:
+  type: deploy
+  stage: production
+  image: ruby:latest # Using ruby image to deploy to heroku
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    # dpl is package to deploy to heroku
+    # - gem install dpl
+    # - npm install
+    # - npx sequelize db:create
+    # - npx sequelize db:migrate
+    # - npx sequelize db:seed:all
+    - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api-key=$HEROKU_API_KEY
+  only:
+    - development
