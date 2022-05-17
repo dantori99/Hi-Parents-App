@@ -1,5 +1,7 @@
 # Hi-Parents-App
 
+![Screen-Shot-2022-05-17-at-2-51-41-PM](https://i.ibb.co/NFjQb17/Screen-Shot-2022-05-17-at-2-51-41-PM.png)
+
 > Tech Stack
   - [NodeJS](https://nodejs.org/en/)
   - [ExpressJS](https://expressjs.com/)
